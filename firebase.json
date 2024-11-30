@@ -1,0 +1,34 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "route-scanner-eb325",
+          "appId": "1:983746061577:android:1fceef42579c204a909fd8",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "route-scanner-eb325",
+          "configurations": {
+            "android": "1:983746061577:android:1fceef42579c204a909fd8"
+          }
+        }
+      }
+    }
+  },
+  "functions": {
+    "source": "functions",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "*.local"
+    ],
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ]
+  }
+}

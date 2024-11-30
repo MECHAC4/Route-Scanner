@@ -1,0 +1,97 @@
+// Fichier : android/build.gradle
+
+buildscript {
+    ext.kotlin_version = '1.9.20' // Dernière version stable compatible
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:8.0.2' // Vérifiez aussi la version du plugin Android Gradle
+    }
+}
+
+
+plugins {
+    id "com.android.application"
+    // FlutterFire Configuration pour Firebase
+    id 'com.google.gms.google-services'
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin" // Flutter Gradle Plugin
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
+if (flutterVersionCode == null) {
+    flutterVersionCode = "1"
+}
+
+def flutterVersionName = localProperties.getProperty("flutter.versionName")
+if (flutterVersionName == null) {
+    flutterVersionName = "1.0"
+}
+
+android {
+    namespace = "com.example.route_scanner"
+    compileSdk = 34  // Spécifie explicitement la version compileSdk
+
+    defaultConfig {
+        applicationId = "com.example.route_scanner"
+        minSdkVersion 24
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode = flutterVersionCode.toInteger()
+        versionName = flutterVersionName
+
+        multiDexEnabled true // Si votre application utilise des méthodes en excès (65k+)
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true // Vous pouvez changer cela si nécessaire
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    // Force Kotlin version pour éviter les conflits
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // Firebase dependencies
+    implementation platform('com.google.firebase:firebase-bom:33.4.0') // BOM pour gérer les versions Firebase
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-messaging'
+
+    // Autres dépendances nécessaires pour votre projet
+    implementation 'androidx.core:core-ktx:1.13.1'
+
+    // MultiDex si nécessaire
+    implementation 'androidx.multidex:multidex:2.0.1'
+}
+
+configurations.all {
+    resolutionStrategy {
+        // Force une version unique pour Kotlin
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
+}

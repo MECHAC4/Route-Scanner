@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "983746061577",
+    "project_id": "route-scanner-eb325",
+    "storage_bucket": "route-scanner-eb325.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983746061577:android:1fceef42579c204a909fd8",
+        "android_client_info": {
+          "package_name": "com.example.route_scanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFgK-4A-8rIWLsLQBq5fuZsRO6VRPLYWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
